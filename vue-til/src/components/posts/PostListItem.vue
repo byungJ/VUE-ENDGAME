@@ -7,8 +7,8 @@
       {{ postItem.contents }}
     </div>
     <div class="post-time">
-      {{ postItem.createdAt }}
-      <i class="icon ion-md-create"></i>
+      {{ postItem.createdAt | formatData }}
+      <i class="icon ion-md-create" @click="routeEditPage"></i>
       <i class="icon ion-md-trash" @click="deleteItem"></i>
     </div>
   </li>
@@ -24,6 +24,11 @@ export default {
       required: true,
     },
   },
+  // filters: {
+  //   formatData(value) {
+  //     return new Date(value);
+  //   },
+  // },
   methods: {
     async deleteItem() {
       if (confirm('You want to delete it?')) {
@@ -31,6 +36,10 @@ export default {
         this.$emit('refresh');
         console.log('deleted');
       }
+    },
+    routeEditPage() {
+      const id = this.postItem._id;
+      this.$router.push(`/post/${id}`);
     },
   },
 };
